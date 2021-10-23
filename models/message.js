@@ -29,4 +29,4 @@ MessageSchema.method('toJSON', function(){
     return object;
 });
 
-module.exports = model('Message, MessageSchema');
+module.exports = model('Message', MessageSchema);
