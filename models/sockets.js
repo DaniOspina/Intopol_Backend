@@ -1,7 +1,8 @@
 const { checkJWT } = require('../helpers/jwt');
 const { userConnected, 
         userDisconnected, 
-        getUsers } = require('../controllers/sockets');
+        getUsers, 
+        recordMessage} = require('../controllers/sockets');
 
 
 class Sockets {
@@ -25,17 +26,17 @@ class Sockets {
                 return socket.disconnect();
             }
 
-            const user = await userConnected( uid );
+            await userConnected( uid );
 
-            // console.log("User connected: ", user.name)
-
-
+            //Join user to a chat
+            socket.join(uid);
+            
             //TODO: Validate JWT
             //SI EL TOKEN NO ES VALIDO, DESCONECTAR
 
             //TODO: Saber que usuario esta activo con el UID
 
-            //TODO: Usuarios conectados
+            //Connected user
             this.io.emit( 'users-list', await getUsers())
 
             //TODO: Usuarios conectados para
@@ -43,7 +44,11 @@ class Sockets {
             //TODO: Unirme a un chat grupal  Socket join
 
             //TODO: Escuchar cuando se envia mensajes para
-
+            socket.on('personal-message', async(payload) => {
+                const message = await recordMessage (payload);
+                this.io.to(payload.to).emit('personal-message', message);
+                this.io.to(payload.from).emit('personal-message', message);
+            });
             //TODO: DB que el usuario se desconector
 
             //TODO: emitir usuario conectados

@@ -11,7 +11,7 @@ const getChat = async (req, res) => {
             {from: messagesFrom, to: miId}
         ]
     })
-    .sort({createAt: 'desc'})  //show messsage in desc order
+    .sort({createAt: 'asc'})  //show messsage in desc order
     .limit(30);  //max 30 messages
 
 
