@@ -10,13 +10,19 @@
 <body class="container">
     <h1 class="mt-5">Acceso denegado</h1>
     <hr>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js" integrity="sha512-AcZyhRP/tbAEsXCCGlziPun5iFvcSUpEz2jKkx0blkYKbxU81F+iq8FURwPn1sYFeksJ+sDDrI5XujsqSobWdQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.1/socket.io.js" integrity="sha512-Y5MDU6RaF5h5HE5BgqJlKkV12kbkbIgWHutcT+XHHNOUzr+HHjWZGC02sqEguuPglmFms3cc08WH2PhQ5rF8Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js" integrity="sha512-AcZyhRP/tbAEsXCCGlziPun5iFvcSUpEz2jKkx0blkYKbxU81F+iq8FURwPn1sYFeksJ+sDDrI5XujsqSobWdQ==" crossorigin="anonymous"></script> -->
     <script>
         // Conexión con el socket server
-        const socket = io('http://localhost:8080');
+        const socket = io('https://chatintopcol.herokuapp.com');
+        // 'http://localhost:8080'
         /// Para emitir
         // socket.emit('mensaje-to-server', { data });
         
+    socket.on('connect', () =>{
+        console.log('conectado');
+    });
+
         // Para escuchar
         socket.on('mensaje-from-server', (data) => {
             // callback a ejecutar
