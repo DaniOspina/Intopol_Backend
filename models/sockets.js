@@ -1,5 +1,7 @@
 const { checkJWT } = require('../helpers/jwt');
-const { userConnected, userDisconnected } = require('../controllers/sockets');
+const { userConnected, 
+        userDisconnected, 
+        getUsers } = require('../controllers/sockets');
 
 
 class Sockets {
@@ -25,7 +27,7 @@ class Sockets {
 
             const user = await userConnected( uid );
 
-            console.log("User connected: ", user.name)
+            // console.log("User connected: ", user.name)
 
 
             //TODO: Validate JWT
@@ -34,6 +36,7 @@ class Sockets {
             //TODO: Saber que usuario esta activo con el UID
 
             //TODO: Usuarios conectados
+            this.io.emit( 'users-list', await getUsers())
 
             //TODO: Usuarios conectados para
 
@@ -47,7 +50,7 @@ class Sockets {
 
             socket.on('disconnect', async() => {
                 await userDisconnected( uid );
-                console.log("User disconnected: ", user.name)
+                this.io.emit( 'users-list', await getUsers())
             })
             
         });
